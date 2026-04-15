@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Шпаргалка для фронтенд-собеседований</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Шпаргалка для собеседований (Frontend)</h1>
+
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Что такое семантический HTML?
+          </button>
+          <div class="accordion-content">
+            <p>
+              Семантический HTML — использование тегов, отражающих смысл
+              содержимого: <code>&lt;header&gt;</code>,
+              <code>&lt;article&gt;</code>, <code>&lt;nav&gt;</code> и т. д.
+              Преимущества:
+            </p>
+            <ul>
+              <li>Улучшение доступности (для скринридеров)</li>
+              <li>Лучшая SEO-оптимизация</li>
+              <li>Упрощение поддержки кода</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Разница между flexbox и grid?
+          </button>
+          <div class="accordion-content">
+            <p>
+              <strong>Flexbox</strong> — одномерная система раскладки (строка
+              или столбец). Идеален для выравнивания элементов внутри
+              контейнера.
+            </p>
+            <p>
+              <strong>Grid</strong> — двумерная система (строки и столбцы
+              одновременно). Подходит для создания макетов страниц.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Как работает event loop в JavaScript?
+          </button>
+          <div class="accordion-content">
+            <p>
+              Event loop — механизм, позволяющий JS выполнять асинхронный код
+              без блокировки основного потока. Этапы:
+            </p>
+            <ol>
+              <li>Выполнение синхронного кода</li>
+              <li>Помещение асинхронных задач в очередь (callback queue)</li>
+              <li>Обработка событий из очереди, когда стек вызовов пуст</li>
+            </ol>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            В чем отличия null и undefined в JavaScript?
+          </button>
+          <div class="accordion-content">
+            <p><strong>Типы данных:</strong></p>
+            <ol>
+              <li>undefined — самостоятельный тип "undefined"</li>
+              <li>
+                null — исторически считается объектом (typeof null ===
+                "object"), хотя технически это отдельный тип. Это признанный баг
+                языка.
+              </li>
+            </ol>
+            <p><strong>Как они возникают:</strong></p>
+            <p>
+              <strong>
+                undefined — значение, которое JavaScript присваивает
+                автоматически:
+              </strong>
+            </p>
+            <ol>
+              <li>Объявленная, но не инициализированная переменная.</li>
+              <li>Доступ к несуществующему свойству объекта.</li>
+              <li>Параметр функции, для которого не передан аргумент.</li>
+              <li>
+                void 0 (часто используется как безопасный способ получить
+                undefined).
+              </li>
+              <p>
+                <strong>
+                  null — всегда задаётся программистом вручную, чтобы указать
+                  «здесь намеренно ничего нет».
+                </strong>
+              </p>
+            </ol>
+            <p><strong>Сравнение:</strong></p>
+            <ol>
+              <li>null == undefined // true (нестрогое равенство)</li>
+              <li>
+                null === undefined // false (строгое равенство, разные типы)
+              </li>
+            </ol>
+            <p><strong> Преобразование в числа:</strong></p>
+            <ol>
+              <li>Number(null) // 0</li>
+              <li>Number(undefined) // NaN</li>
+              <li>null + 5 // 5</li>
+              <li>undefined + 5 // NaN</li>
+            </ol>
+            <p><strong>В булевом контексте:</strong></p>
+            <ol>
+              <li>!!null // false</li>
+              <li>!!undefined // false</li>
+            </ol>
+            <p><strong>В JSON:</strong></p>
+            <li>
+              null — корректное JSON-значение: JSON.stringify({a: null}) →
+              '{"a":null}'.
+            </li>
+            <li>
+              undefined — игнорируется (или превращается в null при замене):
+              JSON.stringify({a: undefined}) → '{}'.
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
