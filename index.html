@@ -127,6 +127,28 @@
               undefined — игнорируется (или превращается в null при замене):
               JSON.stringify({a: undefined}) → '{}'.
             </li>
+            <p><strong>Оператор in и проверка свойств:</strong></p>
+            <p>let obj = { a: undefined, b: null };</p>
+            <ol>
+              <li>console.log('a' in obj); // true (свойство есть)</li>
+              <li>console.log('b' in obj); // true</li>
+              <li>console.log('c' in obj); // false</li>
+            </ol>
+            <p><strong>Идиомы и рекомендации:</strong></p>
+            <ol>
+              <li>
+                Проверка на «пустоту» часто пишется как if (value == null) —
+                ловит и null, и undefined.
+              </li>
+              <li>
+                Для строгой проверки: if (value === undefined) или if (value ===
+                null).
+              </li>
+              <li>
+                Если переменная должна явно обозначать «нет значения», обычно
+                используют null. undefined оставляют для системных ситуаций.
+              </li>
+            </ol>
           </div>
         </div>
       </div>
