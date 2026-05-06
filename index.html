@@ -151,6 +151,384 @@
             </ol>
           </div>
         </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Отличие var, let, и const?</button>
+          <div class="accordion-content">
+            <p><strong>Область видимости</strong></p>
+            <ol>
+              <li>
+                <p>
+                  <strong>
+                    var: доступна внутри всей функции, даже если объявлена
+                    внутри блока (if, for). Вне функций становится глобальной.
+                  </strong>
+                </p>
+                if (true) { var a = 10; } console.log(a); // 10 (утечка из
+                блока)
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    let и const: видны только внутри блока { ... } (цикл,
+                    условие, функция и т.д.). </strong
+                  ><br />
+                  if (true) { let b = 20; } console.log(b); // ReferenceError
+                </p>
+              </li>
+            </ol>
+            <p>
+              <strong>
+                Поднятие (hoisting) и временная мёртвая зона (TDZ)
+              </strong>
+            </p>
+            <ol>
+              <li>
+                <p>
+                  <strong>
+                    var: поднимается, но инициализируется undefined. К ней можно
+                    обратиться до объявления – получите undefined.
+                  </strong>
+                </p>
+                console.log(x); // undefined var x = 5;
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    let / const: тоже поднимаются, но не инициализируются. До
+                    фактического объявления переменная находится в «временной
+                    мёртвой зоне» (Temporal Dead Zone). Доступ к ней вызывает
+                    ReferenceError.
+                  </strong>
+                </p>
+                console.log(y); // ReferenceError: Cannot access 'y' before
+                initialization let y = 5;
+              </li>
+            </ol>
+            <p>
+              <strong> Повторное объявление </strong>
+            </p>
+            <ol>
+              <li>var c = 1; var c = 2; // OK</li>
+              <li>let d = 1; let d = 2; // SyntaxError</li>
+              <li>const e = 1; const e = 2; // SyntaxError</li>
+            </ol>
+            <p>
+              <strong> Изменение значения </strong>
+            </p>
+            <ol>
+              <li>
+                <p>
+                  <strong>var / let: можно менять сколько угодно раз.</strong>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    const: нельзя переприсвоить переменную. Однако если это
+                    объект или массив, можно изменять его содержимое (свойства,
+                    элементы).
+                  </strong>
+                </p>
+                const user = { name: "John" }; user.name = "Jane"; // OK user =
+                {}; // TypeError: Assignment to constant variable
+              </li>
+            </ol>
+            <p>
+              <strong>Инициализация</strong>
+            </p>
+            <ol>
+              <li>var v; // OK, значение undefined</li>
+              <li>let l; // OK, значение undefined</li>
+              <li>
+                const c; // SyntaxError: Missing initializer in const
+                declaration
+              </li>
+            </ol>
+            <p><strong>Что использовать?</strong></p>
+            <ol>
+              <li>
+                const по умолчанию (если значение не будет переназначаться).
+              </li>
+              <li>
+                let когда переменная должна меняться (счётчики, аккумуляторы).
+              </li>
+              <li>
+                var лучше избегать в современном коде из-за неочевидного
+                поведения с областью видимости и утечек в глобальный объект.
+              </li>
+            </ol>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Строгий режим (strict mode) в JavaScript?
+          </button>
+          <div class="accordion-content">
+            <p><strong>Как включить</strong></p>
+            <p>
+              Достаточно добавить строку 'use strict'; (или "use strict";) в
+              начало скрипта или функции.
+            </p>
+            <p>
+              javascript 'use strict'; // весь код в этом файле работает в
+              строгом режиме
+            </p>
+            <p><strong>Что меняет строгий режим:</strong></p>
+            <ol>
+              <li>
+                <p>
+                  <strong>
+                    Запрет на неявное создание глобальных переменных
+                  </strong>
+                </p>
+                <p>
+                  В обычном режиме присвоение значения необъявленной переменной
+                  автоматически создаёт глобальную переменную. В строгом режиме
+                  это вызывает ошибку.
+                </p>
+                <p>
+                  javascript 'use strict'; x = 10; // ReferenceError: x is not
+                  defined
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    Невозможно удалить переменные, функции или параметры
+                  </strong>
+                </p>
+                <p>
+                  delete для идентификатора (переменной или функции) запрещён.
+                </p>
+                <p>
+                  javascript 'use strict'; let a = 5; delete a; // SyntaxError:
+                  Delete of an unqualified identifier ...
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong> Одинаковые имена параметров функции </strong>
+                </p>
+                <p>
+                  В обычном режиме разрешено дублирование имён параметров. В
+                  строгом — ошибка синтаксиса.
+                </p>
+                <p>
+                  javascript 'use strict'; function sum(a, a, c) { //
+                  SyntaxError: Duplicate parameter name not allowed return a + a
+                  + c; }
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong> Упрощение this в функциях </strong>
+                </p>
+                <p>
+                  Глобальные функции получают this равный undefined, а не объект
+                  окна (в браузере window). Это предотвращает случайное создание
+                  глобальных свойств через this.
+                </p>
+                <p>
+                  javascript 'use strict'; function show() { console.log(this);
+                  // undefined } show();
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong> Запрет на использование with </strong>
+                </p>
+                <p>
+                  Конструкция with полностью запрещена, так как делает код
+                  неоптимизируемым и непредсказуемым.
+                </p>
+                <p>
+                  javascript 'use strict'; with (Math) { // SyntaxError: Strict
+                  mode code may not include a with statement x = cos(2); }
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    Запрещены восьмеричные литералы (прежний синтаксис)
+                  </strong>
+                </p>
+                <p>
+                  Восьмеричные числа с ведущим нулем больше не разрешены (но
+                  0o-префикс работает).
+                </p>
+                <p>
+                  javascript 'use strict'; let num = 012; // SyntaxError: Octal
+                  literals are not allowed in strict mode.
+                  <br />
+                  let oct = 0o12; // ОК, современный синтаксис
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    Ошибки при попытке записи в readonly-свойства, добавления
+                    свойства в нерасширяемом объекте и т.п.
+                  </strong>
+                </p>
+                <p>
+                  Раньше такие действия молча игнорировались, теперь бросают
+                  исключение.
+                </p>
+                <p>
+                  javascript 'use strict'; let obj = {};
+                  Object.defineProperty(obj, 'x', { value: 42, writable: false
+                  }); obj.x = 100; // TypeError: Cannot assign to read only
+                  property 'x'
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong> Ограничения на eval и arguments </strong>
+                </p>
+                <p>
+                  eval не может вводить новые переменные во внешнюю область
+                  видимости (работает в своей собственной области).
+                </p>
+                <p>
+                  arguments ведёт себя как обычный идентификатор, его нельзя
+                  переопределить и он не синхронизируется с параметрами функции.
+                </p>
+                <p>
+                  javascript <br />
+                  'use strict';<br />
+                  function f(a) { arguments[0] = 10; // изменяет только
+                  arguments, а не параметр a console.log(a); // старое значение
+                  (не 10) }
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    Запрет на использование зарезервированных слов в качестве
+                    имён переменных
+                  </strong>
+                </p>
+                <p>
+                  Слова, зарезервированные для будущих версий (implements,
+                  interface, let, package, private, protected, public, static,
+                  yield), нельзя использовать как имена переменных.
+                </p>
+                <p>
+                  javascript <br />
+                  'use strict'; <br />
+                  let private = 5; // SyntaxError: Unexpected strict mode
+                  reserved word
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    function внутри блока ведёт себя по правилам ES6
+                    (ограниченная область видимости)
+                  </strong>
+                </p>
+                <p>
+                  В строгом режиме объявление функции внутри блока (if, for и
+                  т.д.) будет видно только внутри этого блока, а не подниматься
+                  в родительскую функцию.
+                </p>
+              </li>
+            </ol>
+            <p>
+              <strong>Преимущества использования строгого режима </strong>
+            </p>
+            <ol>
+              <li>
+                <p>
+                  <strong>
+                    Безопасность – устраняет случайное создание глобальных
+                    переменных.
+                  </strong>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    Понятность – запрещает сомнительные конструкции (with, eval
+                    в глобальной области и др.).
+                  </strong>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    Производительность – некоторые оптимизации компилятора
+                    становятся возможны благодаря более предсказуемому
+                    поведению.
+                  </strong>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>
+                    Совместимость с будущим – запрещает использование
+                    зарезервированных слов, которые могут появиться в следующих
+                    версиях JS.
+                  </strong>
+                </p>
+              </li>
+            </ol>
+            <p>
+              <strong> Когда строгий режим включён автоматически </strong>
+            </p>
+            <ol>
+              <li>
+                <p>
+                  Модули (ES6 modules) – весь код внутри модуля по умолчанию
+                  работает в строгом режиме.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Классы (ES6 classes) – тело класса и его методы выполняются в
+                  строгом режиме.
+                </p>
+                <p>
+                  javascript class Example { someMethod() { // здесь уже строгий
+                  режим x = 10; // ReferenceError } }
+                </p>
+              </li>
+              <li>
+                <p>
+                  Стрелочные функции – если они объявлены в строгом окружении.
+                </p>
+              </li>
+            </ol>
+            <p>
+              <strong>Рекомендация </strong>
+            </p>
+            <p>
+              Всегда используйте строгий режим. В новых проектах, основанных на
+              модулях или классах, он уже включён автоматически. Для старых
+              скриптов, которые не используют модули, добавьте 'use strict' в
+              начале файла.
+            </p>
+            <p>
+              <strong> Пример сравнения </strong>
+            </p>
+            <p>
+              <strong> Обычный режим (слабый) </strong>
+            </p>
+            <p>
+              javascript function test() { x = 5; // создаётся глобальная
+              переменная x delete x; // молчаливо игнорируется (или false)
+              console.log(x); // 5 } test();
+            </p>
+
+            <p>
+              <strong> Строгий режим </strong>
+            </p>
+            <p>
+              javascript 'use strict'; function test() { x = 5; //
+              ReferenceError delete x; // до ошибки не доходит } test();
+            </p>
+          </div>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>
