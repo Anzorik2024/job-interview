@@ -29,7 +29,6 @@
             </ul>
           </div>
         </div>
-
         <div class="accordion-item">
           <button class="accordion-header">
             Разница между flexbox и grid?
@@ -46,7 +45,6 @@
             </p>
           </div>
         </div>
-
         <div class="accordion-item">
           <button class="accordion-header">
             Как работает event loop в JavaScript?
@@ -527,6 +525,85 @@
               javascript 'use strict'; function test() { x = 5; //
               ReferenceError delete x; // до ошибки не доходит } test();
             </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Какие есть типы данных в JavaScript?
+          </button>
+          <div class="accordion-content">
+            <p>
+              <strong>
+                В JavaScript данные делятся на примитивные (простые) типы и
+                ссылочный тип (объекты). Вот полный список:
+              </strong>
+            </p>
+            <ol>
+              <p>
+                <strong> Примитивные типы (7 штук) </strong>
+              </p>
+              <li>
+                <strong>number</strong> — целые и дробные числа, также
+                специальные значения Infinity, -Infinity, NaN (Not a Number).
+              </li>
+              <li>
+                <strong>bigint</strong> — целые числа произвольной точности
+                (появился в ES2020). Создаётся добавлением n в конце: 123n.
+              </li>
+              <li>
+                <strong>string</strong> — текстовые строки (можно в одинарных,
+                двойных или обратных кавычках).
+              </li>
+              <li>
+                <strong>boolean</strong> — логические значения: true и false.
+              </li>
+              <li>
+                <strong>undefined </strong>— значение «не назначено». У
+                переменной, которая объявлена, но не инициализирована.
+              </li>
+              <li>
+                <strong>null</strong> — значение «пусто» или «объекта не
+                существует».
+              </li>
+              <li>
+                <strong>symbol (ES2015)</strong> — уникальные и неизменяемые
+                идентификаторы, часто для ключей свойств объекта.
+              </li>
+            </ol>
+            <p>
+              <strong>Ссылочный тип</strong>
+            </p>
+            <ol>
+              <p>
+                <strong>object — сложные структуры данных. Сюда входят:</strong>
+              </p>
+              <li>обычные объекты {...}</li>
+              <li>массивы [...]</li>
+              <li>функции</li>
+              <li>даты (Date)</li>
+              <li>регулярные выражения (RegExp)</li>
+              <li>и другие встроенные объекты (Map, Set, WeakMap и т.д.)</li>
+            </ol>
+            <p>
+              <strong>Особенности: </strong>
+            </p>
+            <ol>
+              <li>Примитивы хранятся и копируются «по значению».</li>
+              <li>Объекты — «по ссылке».</li>
+              <li>
+                Оператор typeof помогает определить тип, но есть нюансы:
+                <ul>
+                  <li>
+                    typeof null → "object" (это исторически сложившийся баг
+                    языка)
+                  </li>
+                  <li>
+                    typeof function(){} → "function" (хотя функция — подвид
+                    объекта).
+                  </li>
+                </ul>
+              </li>
+            </ol>
           </div>
         </div>
       </div>
