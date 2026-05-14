@@ -100,3 +100,6 @@ code {
     padding: 0.8rem 1rem;
   }
 }
+.accordion-description {
+  margin-top: 7px;
+}
