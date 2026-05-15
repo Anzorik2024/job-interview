@@ -696,6 +696,139 @@
             </p>
           </div>
         </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Что такое замыкание и hoisting (всплытие)? Привести пример
+            замыкания.
+          </button>
+          <div class="accordion-content">
+            <p><strong>1. Hoisting (всплытие)</strong></p>
+            <p class="accordion-description">
+              Hoisting — это механизм JavaScript, при котором объявления
+              переменных и функций поднимаются в начало своей области видимости
+              (скоупа) перед выполнением кода. Однако важно различать, что
+              именно поднимается и как ведут себя разные типы объявлений.
+            </p>
+            <p class="accordion-description accordion-description--highlighted">
+              Переменные:
+            </p>
+            <ol>
+              <li>
+                <p>
+                  &nbsp;var — объявление поднимается, но инициализация остаётся
+                  на месте. До инициализации переменная существует, но имеет
+                  значение undefined.
+                </p>
+                <p class="accordion-description">Пример hoisting с var:</p>
+                <code>
+                  console.log(a); // undefined (не ошибка!) <br />
+                  var a = 5;<br />
+                  console.log(a); // 5 <br />
+                  // Как это видит движок: <br />
+                  // var a; <br />
+                  // console.log(a); // undefined <br />
+                  // a = 5; <br />
+                  // console.log(a); // 5
+                </code>
+              </li>
+              <li>
+                <p>
+                  let и const — тоже поднимаются, но находятся во «временной
+                  мёртвой зоне» (TDZ) до момента объявления. Доступ к ним до
+                  строки объявления вызывает ошибку ReferenceError.
+                </p>
+                <p class="accordion-description">Пример с let:</p>
+                <code>
+                  console.log(b); // ReferenceError: Cannot access 'b' before
+                  initialization <br />
+                  let b = 10;
+                </code>
+              </li>
+            </ol>
+            <p class="accordion-description accordion-description--highlighted">
+              Функции:
+            </p>
+            <ol>
+              <li>
+                <p>
+                  <strong>Function Declaration (объявление функции)</strong> —
+                  поднимается полностью (и объявление, и тело), поэтому функцию
+                  можно вызывать до её определения в коде.
+                </p>
+                <code>
+                  sayHello(); // "Hello!" — работает, потому что функция поднята
+                  целиком <br />
+                  function sayHello() <br />
+                  { console.log("Hello!"); }
+                </code>
+              </li>
+              <li>
+                <strong
+                  >Function Expression (присваивание функции переменной)</strong
+                >
+                - — подчиняется правилам переменной (см. var, let, const).
+              </li>
+            </ol>
+            <p><strong>2. Замыкание (closure)</strong></p>
+            <p class="accordion-description accordion-description--highlighted">
+              Замыкание — это функция, которая «запоминает» своё лексическое
+              окружение (переменные из внешней функции) даже после того, как
+              внешняя функция завершила выполнение. Другими словами, внутренняя
+              функция имеет доступ к переменным внешней функции, даже когда
+              вызывается за пределами внешней.
+            </p>
+            <p><strong> Как работает замыкание:</strong></p>
+            <ol>
+              <li>
+                Каждая функция в JavaScript создаёт свой лексический скоуп.
+              </li>
+              <li>
+                Если внутренняя функция ссылается на переменные внешней, то эти
+                переменные не удаляются сборщиком мусора, пока существует
+                внутренняя функция.
+              </li>
+            </ol>
+            <p><strong> Основные применения замыканий:</strong></p>
+            <ol>
+              <li>Создание приватных переменных.</li>
+              <li>
+                <p>Фабрики функций (например, счётчики).</p>
+                <p class="accordion-description">Простой счётчик:</p>
+                <code>
+                  function createCounter() { <br />
+                  let count = 0; // переменная внешней функции <br />
+                  return function() { <br />
+                  count++; // внутренняя функция «замыкает» <br />
+                  count return count; <br />
+                  };<br />
+                  } <br />
+                  const counter = createCounter();<br />
+                  console.log(counter()); // 1 <br />
+                  console.log(counter()); // 2 <br />
+                  console.log(counter()); // 3 <br />
+                  // Переменная count не доступна напрямую:<br />
+                  console.log(count); // ReferenceError: count is not defined
+                </code>
+              </li>
+              <li>Каррирование и частичное применение.</li>
+              <li>Обработчики событий, сохраняющие состояние.</li>
+            </ol>
+            <p><strong>Итог</strong></p>
+            <ol>
+              <li>
+                Hoisting — это «поднятие» объявлений в начало скоупа,
+                позволяющее использовать функции и переменные (var) до их
+                фактического объявления (но с осторожностью).
+              </li>
+              <li>
+                Замыкание — это способность функции помнить своё лексическое
+                окружение, даже когда выполнение выходит за пределы этого
+                окружения. Это мощный инструмент для создания гибкого и
+                модульного кода.
+              </li>
+            </ol>
+          </div>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>

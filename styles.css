@@ -102,4 +102,9 @@ code {
 }
 .accordion-description {
   margin-top: 7px;
+  font-style: italic;
+}
+
+.accordion-description--highlighted {
+  text-decoration: underline;
 }
