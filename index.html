@@ -829,6 +829,189 @@
             </ol>
           </div>
         </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            В чем разница function declaration и function expression?
+          </button>
+          <div class="accordion-content">
+            <p class="accordion-description">
+              Основное различие между
+              <strong> Function Declaration</strong> (объявление функции) и
+              <strong> Function Expression </strong> (функциональное выражение)
+              в JavaScript — в том, как интерпретатор обрабатывает их во время
+              выполнения кода. Вот ключевые отличия:
+            </p>
+            <ol>
+              <li>
+                <h3 class="accordion-item__title">Поднятие (Hoisting)</h3>
+                <ul>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Function Declaration</strong> полностью
+                      поднимается в начало своей области видимости. Функцию
+                      можно вызвать до её объявления в коде.
+                    </p>
+                    <code>
+                      // Function Declaration<br />
+                      foo(); // "Привет" - работает<br />
+                      function foo() <br />
+                      {<br />
+                      &nbsp;console.log("Привет");<br />
+                      }
+                    </code>
+                  </li>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Function Expression </strong> поднимается только
+                      переменная (var), но не её значение. Поэтому вызвать
+                      функцию до её определения нельзя (ошибка TypeError или
+                      ReferenceError в зависимости от способа объявления
+                      переменной).
+                    </p>
+                    <code>
+                      // Function Expression<br />
+                      bar(); // Ошибка: bar is not a function (или undefined при
+                      var)<br />
+                      var bar = function()<br />
+                      {<br />
+                      &nbsp; console.log("Пока");<br />
+                      }
+                    </code>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h3 class="accordion-item__title">Имя функции</h3>
+                <ul>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Function Declaration</strong> всегда должно иметь
+                      имя.
+                    </p>
+                  </li>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Function Expression </strong> может быть анонимным
+                      (без имени) или именованным. Анонимные функции часто
+                      передаются как аргументы или присваиваются переменным.
+                    </p>
+                  </li>
+                </ul>
+                <code>
+                  javascript <br />
+                  // Declaration — имя обязательно <br />
+                  function sum(a, b) <br />
+                  { <br />
+                  return a + b; <br />
+                  } <br />
+                  // Expression — анонимная <br />
+                  const multiply = function(a, b) { return a * b; }; //
+                  Expression — именованная (имя полезно для рекурсии и отладки)
+                  <br />
+                  const factorial = function fact(n) { <br />
+                  return n <= 1 ? 1 : n * fact(n - 1); <br />
+                  };
+                </code>
+              </li>
+              <li>
+                <h3 class="accordion-item__title">Где можно использовать</h3>
+                <ul>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Function Declaration</strong> допустимо только в
+                      основном потоке кода или внутри других функций (нельзя
+                      внутри блоков типа if, while, for в строгом режиме —
+                      поведение может быть непредсказуемым или вызывать ошибки).
+                    </p>
+                  </li>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Function Expression </strong>
+                      можно использовать везде, где ожидается выражение: в
+                      блоках, в тернарных операторах, как аргументы других
+                      функций и т.д.
+                    </p>
+                  </li>
+                </ul>
+                <code>
+                  // Declaration внутри блока — плохая практика, может не
+                  работать в разных браузерах <br />
+                  if (true) { <br />
+                  function hello() { <br />
+                  console.log("Hello"); <br />
+                  } <br />
+                  // не гарантируется } <br />
+                  // Expression внутри блока — корректно <br />
+                  let hello; <br />
+                  if (true) { <br />
+                  hello = function() { console.log("Hello"); }; <br />
+                  }
+                </code>
+              </li>
+              <li>
+                <h3 class="accordion-item__title">Область видимости</h3>
+                <ul>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Function Declaration</strong>
+                      имеет блочную область видимости только в строгом режиме
+                      (ES6+). В нестрогом режиме может вести себя неинтуитивно.
+                      На практике лучше избегать объявления функций внутри
+                      блоков.
+                    </p>
+                  </li>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Function Expression</strong>
+                      подчиняется обычным правилам области видимости переменных
+                      (блочной для let/const, функциональной для var).
+                    </p>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h3 class="accordion-item__title">
+                  Завершающая точка с запятой
+                </h3>
+                <ul>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Function Declaration</strong> не требует точки с
+                      запятой в конце.
+                    </p>
+                  </li>
+                  <li>
+                    <p class="accordion-description">
+                      <strong> Function Expression </strong> (как часть
+                      присваивания или выражения) обычно завершается точкой с
+                      запятой.
+                    </p>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h3 class="accordion-item__title">Когда что использовать?</h3>
+                <ul>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Declaration</strong>
+                      — когда вам нужна функция, которую можно вызывать до
+                      определения, и которая является основной частью
+                      модуля/скрипта.
+                    </p>
+                  </li>
+                  <li>
+                    <p class="accordion-description">
+                      <strong>Expression</strong>
+                      — когда нужно передать функцию как колбэк, создать её
+                      условно, или ограничить область видимости.
+                    </p>
+                  </li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>

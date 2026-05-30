@@ -108,3 +108,7 @@ code {
 .accordion-description--highlighted {
   text-decoration: underline;
 }
+
+.accordion-item__title {
+  margin-top: 7px;
+}
