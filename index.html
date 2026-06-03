@@ -1012,6 +1012,117 @@
             </ol>
           </div>
         </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            В чем разница двойного равно и тройного (== и ===)?
+          </button>
+          <div class="accordion-content">
+            <p class="accordion-description">
+              В JavaScript разница между == и === ключевая и касается
+              <strong>приведения типов.</strong>
+            </p>
+            <ul>
+              <li>
+                <p class="accordion-description">
+                  <strong> == (нестрогое равенство) </strong> – сравнивает
+                  значения, при необходимости приводя типы к одному. Следует
+                  сложным правилам абстрактного равенства (алгоритм Abstract
+                  Equality Comparison).
+                </p>
+              </li>
+              <li>
+                <p class="accordion-description">
+                  <strong> === (строгое равенство) </strong> – не приводит типы.
+                  Возвращает true, только если тип и значение операндов
+                  совпадают. Работает по алгоритму Strict Equality Comparison.
+                </p>
+              </li>
+            </ul>
+            <h3 class="accordion-item__title">Ключевые отличия на примерах</h3>
+            <code>
+              1 == '1' // true – строка '1' преобразуется в число 1 <br />
+              1 === '1' // false – число vs строка <br />
+              0 == false // true – false → 0, затем 0 == 0 <br />
+              0 === false // false – number vs boolean <br />
+              null == undefined // true – специальное правило: они равны друг
+              другу через == <br />
+              null === undefined // false – null (object? null) vs undefined
+              <br />
+              '' == 0 // true – пустая строка → 0 <br />
+              '' === 0 // false <br />
+              [] == '' // true – массив → пустая строка (через toString) <br />
+              [] === '' // false <br />
+              NaN == NaN // false – NaN не равно ничему, включая себя <br />
+              NaN === NaN // false – аналогично <br />
+              // объекты сравниваются по ссылке <br />
+              {} == {} // false (разные объекты в памяти) <br />
+              {} === {} // false
+            </code>
+            <h3 class="accordion-item__title">
+              Как работает приведение типов в == (упрощённо)
+            </h3>
+            <ul>
+              <li>
+                Если типы одинаковы – сравниваются так же, как === (но с NaN всё
+                плохо).
+              </li>
+              <li>Если null сравнивается с undefined – true.</li>
+              <li>Если число и строка – строка приводится к числу.</li>
+              <li>
+                Если один операнд булевый – он приводится к числу (true → 1,
+                false → 0).
+              </li>
+              <li>
+                Если объект и примитив – объект приводится к примитиву (чаще
+                всего через toString/valueOf).
+              </li>
+            </ul>
+            <h3 class="accordion-item__title">Когда использовать?</h3>
+            <ul>
+              <li>
+                <p class="accordion-description">
+                  Практически всегда используйте ===. Это избавляет от
+                  неочевидных багов, например:
+                </p>
+                <code>
+                  if (someValue == 2) { <br />
+                  // сработает при someValue = '2', что может быть неожиданно
+                  <br />
+                  }
+                </code>
+              </li>
+              <li>
+                <p class="accordion-description">
+                  Исключения, где == может быть удобен:
+                </p>
+                <ul>
+                  <li>
+                    <p class="accordion-description">
+                      Проверка на null или undefined:
+                    </p>
+                    <p>
+                      if (value == null) – вернёт true и для null, и для
+                      undefined (вместо value === null || value === undefined).
+                    </p>
+                  </li>
+                  <li>
+                    <p class="accordion-description">
+                      Чтение с сервера строковых чисел, когда вы точно хотите
+                      нестрогого сравнения (но лучше сначала преобразовать явно:
+                      Number(value)).
+                    </p>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <h4>
+              Итог: <br />
+              === безопаснее, предсказуемее и быстрее, так как не тратит время
+              на приведение типов. <br />
+              == — источник тонких ошибок, если не знать всех правил.
+            </h4>
+          </div>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>
