@@ -1123,6 +1123,97 @@
             </h4>
           </div>
         </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Как проверить переменную на NaN?
+          </button>
+          <div class="accordion-content">
+            <h3 class="accordion-item__title">
+              В JavaScript у NaN есть особенность: он не равен сам себе. Поэтому
+              простое x === NaN не сработает.
+            </h3>
+            <p class="accordion-description">
+              NaN в JavaScript расшифровывается как "Not a Number" (не число),
+              но это числовой тип (typeof NaN === "number"). Оно обозначает
+              результат математической операции, которая не дала осмысленного
+              числа.
+            </p>
+            <h4 class="accordion-item__title">Когда возникает NaN:</h4>
+            <ul>
+              <li>0 / 0</li>
+              <li>Math.sqrt(-1)</li>
+              <li>parseInt("abc")</li>
+              <li>Number("hello")</li>
+              <li>
+                undefined + 1 (или любая операция с undefined, приводящая к
+                числу)
+              </li>
+            </ul>
+            <code class="accordion-description">
+              // Старый способ (с приведением типов) <br />
+              isNaN(x); // вернёт true, если x — NaN или нечисловое значение
+              (например, строку "abc") <br />
+              // Надёжный способ (без приведения) <br />
+              Number.isNaN(x); // true только если x === NaN
+            </code>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            Как в JavaScript передается параметр в функцию - по ссылке или по
+            значению?
+          </button>
+          <div class="accordion-content">
+            <h3>
+              В JavaScript параметры передаются только по значению
+              (pass-by-value). Однако важно понимать разницу для примитивов и
+              объектов.
+            </h3>
+            <p class="accordion-description">
+              Для примитивов (числа, строки, булевы, null, undefined, Symbol,
+              BigInt)
+            </p>
+            <p>
+              Передаётся копия значения. Изменение параметра внутри функции не
+              влияет на исходную переменную.
+            </p>
+            <code>
+              function changePrimitive(x) { <br />
+              x = 10; // меняем локальную копию <br />
+              } <br />
+              let a = 5; <br />
+              changePrimitive(a); <br />
+              console.log(a); // 5 – не изменилось
+            </code>
+            <p class="accordion-description">
+              Для объектов (включая массивы, функции, даты, обычные объекты)
+              <br />
+              Передаётся копия ссылки на объект. Сама ссылка передаётся по
+              значению, но через эту копию можно изменять сам объект. При этом
+              если внутри функции присвоить параметру новый объект, внешняя
+              переменная не изменится.
+            </p>
+            <code>
+              function modifyObject(obj) { <br />
+              obj.name = "new"; // меняет свойство исходного объекта <br />
+              } <br />
+              let myObj = { name: "old" }; <br />
+              modifyObject(myObj); <br />
+              console.log(myObj.name); // "new" – объект изменился<br />
+              <br />
+              function reassignObject(obj) { <br />
+              obj = { name: "different" // перезаписывает локальную ссылку
+              <br />
+              };
+              <br />
+              } <br />
+              let anotherObj = { name: "original" }; <br />
+              reassignObject(anotherObj); <br />
+              console.log(anotherObj.name); // "original" – внешняя переменная
+              не изменилась
+            </code>
+          </div>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>
